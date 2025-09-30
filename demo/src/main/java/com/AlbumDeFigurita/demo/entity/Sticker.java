@@ -1,20 +1,54 @@
 package com.AlbumDeFigurita.demo.entity;
-
 import jakarta.persistence.*;
-
 @Entity
-@Table(name = "stickers")
+@Table(name = "stickers", uniqueConstraints = {
+        @UniqueConstraint(columnNames = {"numero", "album_id"})
+})
 public class Sticker {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    /** Nombre de la figurita. */
+    @Column(nullable = false)
     private String nombre;
-    private int numero;
 
-    @ManyToOne
+    /** Número dentro del álbum (único por álbum). */
+    @Column(nullable = false)
+    private Integer numero;
+    @Enumerated(EnumType.STRING)
+    private Rarity rareza;
+
+    /** Relación: a qué álbum pertenece la figurita. */
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "album_id", nullable = false)
     private Album album;
+    /** Control de stock total. */
+    @Column(nullable = false)
+    private Integer stockTotal;
+    /** Stock disponible (no puede ir en negativo). */
+    @Column(nullable = false)
+    private Integer stockDisponible;
+    /** URL o path de la imagen de la figurita. */
+    @Column(nullable = false)
+    private String imageUrl;
+    
+    // Constructores    
+    public Sticker() {
+    }
+
+    public Sticker(Long id, String nombre, Integer numero, Rarity rareza, Album album,
+                   Integer stockTotal, Integer stockDisponible, String imageUrl) {
+        this.id = id;
+        this.nombre = nombre;
+        this.numero = numero;
+        this.rareza = rareza;
+        this.album = album;
+        this.stockTotal = stockTotal;
+        this.stockDisponible = stockDisponible;
+        this.imageUrl = imageUrl;
+    }
 
     // getters and setters
     public Long getId() { return id; }
@@ -25,4 +59,15 @@ public class Sticker {
     public void setNumero(int numero) { this.numero = numero; }
     public Album getAlbum() { return album; }
     public void setAlbum(Album album) { this.album = album; }
+     public Rarity getRareza() {return rareza;}
+    public void setRareza(Rarity rareza) {this.rareza = rareza;}
+    public Integer getStockTotal() {return stockTotal;}
+    public void setStockTotal(Integer stockTotal) {this.stockTotal = stockTotal;}
+    public Integer getStockDisponible() {return stockDisponible;}
+    public void setStockDisponible(Integer stockDisponible) {this.stockDisponible = stockDisponible;}
+    public String getImageUrl() {return imageUrl;}
+    public void setImageUrl(String imageUrl) {this.imageUrl = imageUrl;}
+
+    // Enum
+    public enum Rarity { COMUN, RARA, EPICA, LEGENDARIA }
 }
