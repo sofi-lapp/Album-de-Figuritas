@@ -1,5 +1,6 @@
 package com.AlbumDeFigurita.demo.entity;
 import jakarta.persistence.*;
+
 @Entity
 @Table(name = "stickers", uniqueConstraints = {
         @UniqueConstraint(columnNames = {"numero", "album_id"})
@@ -17,7 +18,7 @@ public class Sticker {
     /** Número dentro del álbum (único por álbum). */
     @Column(nullable = false)
     private Integer numero;
-    @Enumerated(EnumType.STRING)
+    @Enumerated(EnumType.STRING) //para el state
     private Rarity rareza;
 
     /** Relación: a qué álbum pertenece la figurita. */
@@ -68,6 +69,6 @@ public class Sticker {
     public String getImageUrl() {return imageUrl;}
     public void setImageUrl(String imageUrl) {this.imageUrl = imageUrl;}
 
-    // Enum
+    // State
     public enum Rarity { COMUN, RARA, EPICA, LEGENDARIA }
 }

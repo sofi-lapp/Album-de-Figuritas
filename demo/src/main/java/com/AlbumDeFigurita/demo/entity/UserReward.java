@@ -6,7 +6,7 @@ import java.time.Instant;
 @Table(name = "user_rewards",
        uniqueConstraints = @UniqueConstraint(columnNames = {"user_id", "album_id"}))
 public class UserReward {
-@Id
+    @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
@@ -26,17 +26,14 @@ public class UserReward {
 
     // Fecha en que fue reclamado (null si aún está disponible)
     private Instant claimedAt;
-    // Versión para control de concurrencia optimista
+    // Versión para control de concurrencia
     @Version
     private Long version;
 
-    // Enum
+    // state
     public enum RewardStatus { AVAILABLE, CLAIMED }
 
-    // ---------------------------
     // Constructores
-    // ---------------------------
-
     public UserReward() {
     }
 
