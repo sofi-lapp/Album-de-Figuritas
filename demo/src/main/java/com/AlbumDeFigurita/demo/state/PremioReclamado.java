@@ -7,6 +7,6 @@ public class PremioReclamado implements IEstadoPremio {
 
     @Override
     public void reclamar(Reward premio, User usuario) {
-        System.out.println("⚠️ El premio ya fue reclamado. No puede volver a reclamarse.");
+        System.out.println("El premio ya fue reclamado. Lo sentimos, No puede volver a reclamarse :(");
     }
 }

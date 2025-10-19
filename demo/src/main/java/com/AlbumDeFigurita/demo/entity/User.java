@@ -2,7 +2,7 @@ package com.AlbumDeFigurita.demo.entity;
 
 import jakarta.persistence.*;
 import java.time.Instant;
-import java.util.List;
+import java.util.*;
 
 @Entity
 @Table(name = "users", uniqueConstraints = {
@@ -43,6 +43,8 @@ public class User {
         this.apellido = apellido;
         this.createdAt = createdAt;
     }
+
+
 
     // getters and setters
     public Long getId() { return id; }

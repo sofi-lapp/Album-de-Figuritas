@@ -1,4 +1,7 @@
 package com.AlbumDeFigurita.demo.entity;
+import com.AlbumDeFigurita.demo.state.IEstadoPremio;
+import com.AlbumDeFigurita.demo.state.PremioDisponible;
+
 import jakarta.persistence.*;
 
 @Entity
@@ -11,23 +14,27 @@ public class Reward {
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "album_id", nullable = false, unique = true)
     private Album album;
+    private String descripcion;
 
-    // Tipo de premio (ej: COINS, TROPHY, BADGE)
-    @Column(nullable = false)
-    private String tipo;
+    @Transient
+    private IEstadoPremio estadoPremio = new PremioDisponible();
 
-    // Información dinámica del premio en formato JSON 
-    @Column(columnDefinition = "TEXT")
-    private String payloadJson;
-    // Constructores
-    public Reward() {
+    public void reclamar(User usuario) {
+        estadoPremio.reclamar(this, usuario);
     }
 
-    public Reward(Long id, Album album, String tipo, String payloadJson) {
+    public void setEstadoPremio(IEstadoPremio nuevoEstado) {
+        this.estadoPremio = nuevoEstado;
+    }
+
+    public void setEstadoPremioDisponible() {
+        this.estadoPremio = new PremioDisponible();
+    }
+
+
+    public Reward(Long id, Album album, String tipo) {
         this.id = id;
         this.album = album;
-        this.tipo = tipo;
-        this.payloadJson = payloadJson;
     }
 
     // Getters y Setters
@@ -35,8 +42,6 @@ public class Reward {
     public void setId(Long id) {this.id = id;}
     public Album getAlbum() {return album;}
     public void setAlbum(Album album) {this.album = album;}
-    public String getTipo() {return tipo;}
-    public void setTipo(String tipo) {this.tipo = tipo;}
-    public String getPayloadJson() {return payloadJson;}
-    public void setPayloadJson(String payloadJson) {this.payloadJson = payloadJson;}
+    public String getDescripcion() { return descripcion; }
+    
 }

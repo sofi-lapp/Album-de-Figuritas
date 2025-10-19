@@ -7,6 +7,6 @@ public class PremioEntregado implements IEstadoPremio {
 
     @Override
     public void reclamar(Reward premio, User usuario) {
-        System.out.println("🎁 El premio ya fue entregado al usuario " + usuario.getUsername());
+        System.out.println(" El premio fue entregado al usuario " + usuario.getUsername());
     }
 }

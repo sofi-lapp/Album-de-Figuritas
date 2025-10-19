@@ -1,4 +1,6 @@
 package com.AlbumDeFigurita.demo.entity;
+import com.AlbumDeFigurita.demo.enums.Rareza;
+
 import jakarta.persistence.*;
 
 @Entity
@@ -19,7 +21,8 @@ public class Sticker {
     @Column(nullable = false)
     private Integer numero;
     @Enumerated(EnumType.STRING) //para el state
-    private Rarity rareza;
+    private Rareza rareza;
+    private boolean pegada;
 
     /** Relación: a qué álbum pertenece la figurita. */
     @ManyToOne(fetch = FetchType.LAZY)
@@ -39,7 +42,7 @@ public class Sticker {
     public Sticker() {
     }
 
-    public Sticker(Long id, String nombre, Integer numero, Rarity rareza, Album album,
+    public Sticker(Long id, String nombre, Integer numero, Rareza rareza, Album album,
                    Integer stockTotal, Integer stockDisponible, String imageUrl) {
         this.id = id;
         this.nombre = nombre;
@@ -60,8 +63,10 @@ public class Sticker {
     public void setNumero(int numero) { this.numero = numero; }
     public Album getAlbum() { return album; }
     public void setAlbum(Album album) { this.album = album; }
-     public Rarity getRareza() {return rareza;}
-    public void setRareza(Rarity rareza) {this.rareza = rareza;}
+    public Rareza getRareza() {return rareza;}
+    public void setRareza(Rareza rareza) {this.rareza = rareza;}
+    public boolean isPegada() { return pegada; }
+    public void setPegada(boolean pegada) { this.pegada = pegada; }
     public Integer getStockTotal() {return stockTotal;}
     public void setStockTotal(Integer stockTotal) {this.stockTotal = stockTotal;}
     public Integer getStockDisponible() {return stockDisponible;}
@@ -69,6 +74,4 @@ public class Sticker {
     public String getImageUrl() {return imageUrl;}
     public void setImageUrl(String imageUrl) {this.imageUrl = imageUrl;}
 
-    // State
-    public enum Rarity { COMUN, RARA, EPICA, LEGENDARIA }
 }
